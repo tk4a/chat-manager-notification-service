@@ -1,0 +1,1 @@
+/Users/artemtkachev/Documents/work_projects/chat-manager-notification-service/buildSrc/build/classes/kotlin/main/ConfigurationKt.class:/Users/artemtkachev/Documents/work_projects/chat-manager-notification-service/buildSrc/build/classes/kotlin/main/Version.class
