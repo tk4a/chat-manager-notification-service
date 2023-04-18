@@ -1,3 +1,5 @@
+import org.springdoc.openapi.gradle.plugin.OpenApiGradlePlugin
+
 plugins {
     kotlin("jvm")
     kotlin("plugin.spring")
@@ -5,9 +7,7 @@ plugins {
     id("io.spring.dependency-management")
 }
 
-repositories {
-    mavenCentral()
-}
+apply<OpenApiGradlePlugin>()
 
 dependencies {
     implementation(kotlin("stdlib"))
@@ -31,11 +31,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.14.2")
 
-//    implementation("org.springdoc:springdoc-openapi-webflux-core:${Version.SWAGGER}")
-//    implementation("org.springdoc:springdoc-openapi-webflux-ui:${Version.SWAGGER}")
-//    runtimeOnly("org.springdoc:springdoc-openapi-kotlin:${Version.SWAGGER}")
-    implementation("io.springfox:springfox-spring-webflux:3.0.0-SNAPSHOT")
-    implementation("io.springfox:springfox-swagger-ui:3.0.0-SNAPSHOT")
-    implementation("io.springfox:springfox-swagger2:3.0.0-SNAPSHOT")
+    implementation("org.springdoc:springdoc-openapi-webflux-core:${Version.SWAGGER}")
+    implementation("org.springdoc:springdoc-openapi-webflux-ui:${Version.SWAGGER}")
+    runtimeOnly("org.springdoc:springdoc-openapi-kotlin:${Version.SWAGGER}")
+
     implementation(project(":api"))
 }

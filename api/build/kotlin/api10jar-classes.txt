@@ -1,1 +1,0 @@
-/Users/artemtkachev/Documents/work_projects/chat-manager-notification-service/api/build/classes/kotlin/main/NotificationDto.class

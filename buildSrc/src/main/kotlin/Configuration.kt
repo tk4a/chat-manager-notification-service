@@ -8,7 +8,8 @@ object Version {
     const val SPRING_DEPENDENCY = "1.0.11.RELEASE"
     const val SPRING_CLOUD = "2021.0.6"
 
-    const val SWAGGER = "1.7.0"
+    const val SWAGGER = "1.6.15"
+    const val OPEN_API_PLUGIN = "1.6.0"
 
     const val LIQUIBASE = "4.21.0";
 }
