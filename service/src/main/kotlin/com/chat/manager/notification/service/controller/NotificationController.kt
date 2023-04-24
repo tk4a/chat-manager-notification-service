@@ -41,7 +41,7 @@ class NotificationController(
         requestBody = SwaggerRequestBody(content = [Content(schema = Schema(implementation = NotificationDto::class))])
     )
     @PostMapping
-    fun create(@RequestBody request: NotificationDto): Mono<NotificationDto> = notificationService.save(request.toEntity()).map { it.toDto() }
+    suspend fun create(@RequestBody request: NotificationDto): Mono<NotificationDto> = notificationService.save(request.toEntity()).map { it.toDto() }
 
     @Operation(
         operationId = "getAllByChatId",
@@ -54,5 +54,5 @@ class NotificationController(
         requestBody = SwaggerRequestBody(content = [Content(schema = Schema(implementation = NotificationDto::class))])
     )
     @GetMapping("/{id}")
-    fun getAllByChatId(@PathVariable id: String): Flux<NotificationDto> = notificationService.getAllByChatId(id);
+    suspend fun getAllByChatId(@PathVariable id: String): Flux<NotificationDto> = notificationService.getAllByChatId(id);
 }
