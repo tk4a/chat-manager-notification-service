@@ -1,0 +1,41 @@
+version: "3.8"
+services:
+  discovery-service:
+    container_name: discovery-service
+    build:
+      context: /Users/artemtkachev/Documents/work_projects/chat-manager-eureka-discovery-server
+      dockerfile: Dockerfile
+    image: flipperzer0/discovery-service:latest
+    ports:
+      - "8761:8761"
+    networks:
+      - chat-manager-network
+  cloud-config:
+    depends_on:
+      - discovery-service
+    container_name: cloud-config
+    build:
+      context: /Users/artemtkachev/Documents/work_projects/chat-manager-cloud-config
+      dockerfile: Dockerfile
+    image: flipperzer0/cloud-config:latest
+    ports:
+      - "8888:8888"
+    networks:
+      - chat-manager-network
+  notification-service:
+    depends_on:
+      - cloud-config
+      - discovery-service
+    container_name: notification-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: flipperzer0/notification-service:latest
+    ports:
+      - "8081:8080"
+    networks:
+      - chat-manager-network
+
+networks:
+  chat-manager-network:
+    driver: bridge
