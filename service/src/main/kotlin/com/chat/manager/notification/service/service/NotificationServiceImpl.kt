@@ -10,6 +10,6 @@ import reactor.core.publisher.Mono
 
 @Service
 class NotificationServiceImpl(val repository: NotificationRepository) : NotificationService {
-    override fun save(notification: Notification): Mono<Notification> = repository.save(notification)
+    override fun save(notification: Notification): Mono<Void> = repository.save(notification).then()
     override fun getAllByChatId(id: String): Flux<NotificationDto> = repository.getAllByChatId(id).map { it.toDto() }
 }

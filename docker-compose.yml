@@ -1,40 +1,74 @@
 version: "3.8"
 services:
+
+  postgres-db:
+    container_name: postgres-db
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=docker
+    ports:
+      - "5433:5432"
+    networks:
+     - chat-manager-network
+
   discovery-service:
     container_name: discovery-service
     build:
       context: /Users/artemtkachev/Documents/work_projects/chat-manager-eureka-discovery-server
       dockerfile: Dockerfile
-    image: flipperzer0/discovery-service:latest
+    image: flipperzer0/discovery-service:0.0.2
     ports:
       - "8761:8761"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
+      interval: 15s
+      timeout: 30s
+      retries: 3
+      start_period: 20s
     networks:
       - chat-manager-network
+
   cloud-config:
     depends_on:
-      - discovery-service
+      discovery-service:
+        condition: service_healthy
     container_name: cloud-config
     build:
       context: /Users/artemtkachev/Documents/work_projects/chat-manager-cloud-config
       dockerfile: Dockerfile
-    image: flipperzer0/cloud-config:latest
+    image: flipperzer0/cloud-config:0.0.7
     ports:
       - "8888:8888"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8888/actuator/health" ]
+      interval: 15s
+      timeout: 30s
+      retries: 3
+      start_period: 20s
     networks:
       - chat-manager-network
+    environment:
+      - EUREKA_HOST=discovery-service
+
   notification-service:
     depends_on:
-      - cloud-config
-      - discovery-service
+      cloud-config:
+        condition: service_healthy
+      discovery-service:
+        condition: service_healthy
     container_name: notification-service
     build:
       context: .
       dockerfile: Dockerfile
-    image: flipperzer0/notification-service:latest
+    image: flipperzer0/notification-service:0.0.5
     ports:
-      - "8081:8080"
+      - "8080:8080"
     networks:
       - chat-manager-network
+    environment:
+      - EUREKA_HOST=discovery-service
+      - CONFIG_SERVER_URL=cloud-config
+      - DB_HOST=postgres-db
 
 networks:
   chat-manager-network:

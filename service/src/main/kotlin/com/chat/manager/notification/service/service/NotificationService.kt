@@ -6,6 +6,6 @@ import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 interface NotificationService {
-    fun save(notification: Notification): Mono<Notification>
+    fun save(notification: Notification): Mono<Void>
     fun getAllByChatId(id: String): Flux<NotificationDto>
 }
