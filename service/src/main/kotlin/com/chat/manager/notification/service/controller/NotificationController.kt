@@ -1,7 +1,6 @@
 package com.chat.manager.notification.service.controller
 
 import NotificationDto
-import com.chat.manager.notification.service.mapper.toDto
 import com.chat.manager.notification.service.mapper.toEntity
 import com.chat.manager.notification.service.service.NotificationService
 import io.swagger.v3.oas.annotations.Operation
@@ -41,7 +40,7 @@ class NotificationController(
         requestBody = SwaggerRequestBody(content = [Content(schema = Schema(implementation = NotificationDto::class))])
     )
     @PostMapping
-    suspend fun create(@RequestBody request: NotificationDto): Mono<NotificationDto> = notificationService.save(request.toEntity()).map { it.toDto() }
+    suspend fun create(@RequestBody request: NotificationDto): Mono<Void> = notificationService.save(request.toEntity())
 
     @Operation(
         operationId = "getAllByChatId",

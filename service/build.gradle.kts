@@ -35,5 +35,7 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-webflux-ui:${Version.SWAGGER}")
     runtimeOnly("org.springdoc:springdoc-openapi-kotlin:${Version.SWAGGER}")
 
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+
     implementation(project(":api"))
 }
